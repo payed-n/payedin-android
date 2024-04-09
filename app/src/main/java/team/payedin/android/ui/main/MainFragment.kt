@@ -9,7 +9,8 @@ import androidx.navigation.fragment.findNavController
 import team.payedin.android.R
 import team.payedin.android.databinding.FragmentMainBinding
 
-class MainFragment : Fragment() {
+class
+MainFragment : Fragment() {
 
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!

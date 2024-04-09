@@ -1,13 +1,13 @@
 package team.payedin.android.ui.trade
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import team.payedin.android.R
 import team.payedin.android.ui.trade.placeholder.PlaceholderContent
 
@@ -30,7 +30,7 @@ class TradeRequestListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_trade_request_list_list, container, false)
+        val view = inflater.inflate(R.layout.fragment_trade_request_list, container, false)
 
         // Set the adapter
         if (view is RecyclerView) {
