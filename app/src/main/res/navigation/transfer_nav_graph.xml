@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/transfer_nav_graph"
+    app:startDestination="@id/tradeCreationFragment">
+
+    <fragment
+        android:id="@+id/tradeCreationFragment"
+        android:name="team.payedin.android.ui.trade.TradeCreationFragment"
+        android:label="fragment_trade_creation"
+        tools:layout="@layout/fragment_trade_creation" />
+    <fragment
+        android:id="@+id/tradeDetailsFragment"
+        android:name="team.payedin.android.ui.trade.TradeDetailsFragment"
+        android:label="fragment_trade_details"
+        tools:layout="@layout/fragment_trade_details" />
+    <fragment
+        android:id="@+id/tradeListFragment"
+        android:name="team.payedin.android.ui.trade.TradeListFragment"
+        android:label="fragment_trade_list"
+        tools:layout="@layout/fragment_trade_list" >
+        <action
+            android:id="@+id/action_tradeListFragment_to_tradeDetailsFragment"
+            app:destination="@id/tradeDetailsFragment" />
+        <action
+            android:id="@+id/action_tradeListFragment_to_tradeCreationFragment"
+            app:destination="@id/tradeCreationFragment" />
+    </fragment>
+</navigation>
