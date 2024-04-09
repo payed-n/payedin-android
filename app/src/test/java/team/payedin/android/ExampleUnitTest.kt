@@ -1,4 +1,4 @@
-package com.example.myapplication
+package team.payedin.android
 
 import org.junit.Test
 
