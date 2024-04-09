@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.example.myapplication.R
+import team.payedin.android.R
 
 import team.payedin.android.ui.trade.placeholder.PlaceholderContent.PlaceholderItem
-import com.example.myapplication.databinding.FragmentTradeRequestListBinding
+import team.payedin.android.databinding.FragmentTradeRequestListBinding
 
 /**
  * [RecyclerView.Adapter] that can display a [PlaceholderItem].

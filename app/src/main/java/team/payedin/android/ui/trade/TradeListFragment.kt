@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.myapplication.R
+import team.payedin.android.R
 import team.payedin.android.ui.trade.placeholder.PlaceholderContent
 
 /**

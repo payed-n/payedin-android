@@ -10,12 +10,18 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MyApplication"
+        android:theme="@style/Theme.Payedin"
         tools:targetApi="31">
+        <activity
+            android:name="team.payedin.android.ui.splash.SplashActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:exported="false"
+            android:label="@string/title_activity_splash"
+            android:theme="@style/Theme.Payedin.Fullscreen" />
         <activity
             android:name="team.payedin.android.MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.MyApplication">
+            android:theme="@style/Theme.Payedin">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/FirstFragment"
         android:name="team.payedin.android.ui.main.MainFragment"
-        android:label="@string/first_fragment_label"
+        android:label="@string/main_fragment_label"
         tools:layout="@layout/fragment_main">
 
         <action
@@ -18,7 +18,7 @@
     <fragment
         android:id="@+id/SecondFragment"
         android:name="team.payedin.android.ui.auth.AuthFragment"
-        android:label="@string/second_fragment_label"
+        android:label="@string/auth_fragment_label"
         tools:layout="@layout/fragment_auth">
 
         <action
