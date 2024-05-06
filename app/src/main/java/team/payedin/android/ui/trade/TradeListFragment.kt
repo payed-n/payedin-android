@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import team.payedin.android.R
@@ -31,17 +30,33 @@ class TradeListFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         val view = inflater.inflate(R.layout.fragment_trade_list, container, false)
+        //더미값
+        val item = listOf(
+            PlaceholderContent.PlaceholderItem(
+                "asd",
+                "asd",
+                "asd"
+            ),
+            PlaceholderContent.PlaceholderItem(
+                "asd",
+                "asd",
+                "asd"
+            ),
+            PlaceholderContent.PlaceholderItem(
+                "asd",
+                "asd",
+                "asd"
+            ),
+            PlaceholderContent.PlaceholderItem(
+                "asd",
+                "asd",
+                "asd"
+            ),
+        )
+        val adapter = TradeListRecyclerViewAdapter(item)
+        view.findViewById<RecyclerView>(R.id.re).adapter = adapter
+        view.findViewById<RecyclerView>(R.id.re).layoutManager = LinearLayoutManager(context)
 
-        // Set the adapter
-        if (view is RecyclerView) {
-            with(view) {
-                layoutManager = when {
-                    columnCount <= 1 -> LinearLayoutManager(context)
-                    else -> GridLayoutManager(context, columnCount)
-                }
-                adapter = TradeListRecyclerViewAdapter(PlaceholderContent.ITEMS)
-            }
-        }
         return view
     }
 

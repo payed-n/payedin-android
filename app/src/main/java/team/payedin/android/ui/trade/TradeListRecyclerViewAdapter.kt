@@ -9,6 +9,7 @@ import team.payedin.android.R
 
 import team.payedin.android.ui.trade.placeholder.PlaceholderContent.PlaceholderItem
 import team.payedin.android.databinding.FragmentTradeListBinding
+import team.payedin.android.databinding.TradeListItemBinding
 
 /**
  * [RecyclerView.Adapter] that can display a [PlaceholderItem].
@@ -21,7 +22,7 @@ class TradeListRecyclerViewAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         return ViewHolder(
-            FragmentTradeListBinding.inflate(
+            TradeListItemBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -38,9 +39,9 @@ class TradeListRecyclerViewAdapter(
 
     override fun getItemCount(): Int = values.size
 
-    inner class ViewHolder(binding: FragmentTradeListBinding) :
+    inner class ViewHolder(binding: TradeListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        val idView: TextView = binding.itemNumber
+        val idView: TextView = binding.title
         val contentView: TextView = binding.content
 
         override fun toString(): String {
