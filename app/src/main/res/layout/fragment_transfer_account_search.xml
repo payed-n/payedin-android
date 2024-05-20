@@ -7,9 +7,47 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".ui.transfer.TransferDepositFragment">
+        tools:context=".ui.transfer.TransferAccountSearchFragment">
 
-        <include layout="@layout/topbar" />
+        <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@drawable/ic_radius"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageButton
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="26dp"/>
+
+            <ImageButton
+                android:id="@+id/add"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/ic_add"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/setting"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/setting"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/ic_setting"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginEnd="26dp"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -20,22 +58,13 @@
             android:textSize="24sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:text="박준수 님에게 송금하기"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.Material3.TextInputLayout.FilledBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="32dp"
-            android:hint="송금할 금액 입력"
+            android:hint="계좌번호"
             app:boxBackgroundColor="@android:color/transparent"
             app:boxStrokeColor="#994DE5">
 
@@ -58,6 +87,6 @@
             android:layout_marginBottom="12dp"
             android:background="@drawable/bg_button_primary"
             app:backgroundTint="#994DE5"
-            android:text="확인" />
+            android:text="송금하기" />
     </LinearLayout>
 </layout>

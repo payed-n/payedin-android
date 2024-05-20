@@ -3,27 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/WalletFragment">
 
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="team.payedin.android.ui.main.MainFragment"
-        android:label="@string/main_fragment_label"
-        tools:layout="@layout/fragment_main">
+        android:id="@+id/WalletFragment"
+        android:name="team.payedin.android.ui.wallet.WalletFragment"
+        tools:layout="@layout/fragment_wallet">
 
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_WalletFragment_to_TransferFragment"
+            app:destination="@id/TransferFragment" />
     </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="team.payedin.android.ui.auth.AuthFragment"
-        android:label="@string/auth_fragment_label"
-        tools:layout="@layout/fragment_auth">
+        android:id="@+id/TransferFragment"
+        android:name="team.payedin.android.ui.transfer.TransferAccountSearchFragment"
+        tools:layout="@layout/fragment_transfer_account_search">
 
         <action
             android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            app:destination="@id/WalletFragment" />
     </fragment>
     <include app:graph="@navigation/transfer_nav_graph" />
 </navigation>

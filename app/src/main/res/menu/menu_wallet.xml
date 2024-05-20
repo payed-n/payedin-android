@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/timeline"
+        android:icon="@android:drawable/ic_menu_recent_history"
+        android:title="타임라인"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/settings"
+        android:icon="@drawable/ic_setting"
+        android:title="설정"
+        app:showAsAction="always" />
+</menu>
