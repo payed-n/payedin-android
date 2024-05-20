@@ -35,7 +35,7 @@ class TransferAccountSearchFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_transfer, container, false)
+        return inflater.inflate(R.layout.fragment_transfer_account_search, container, false)
     }
 
     companion object {

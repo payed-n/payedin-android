@@ -1,26 +1,27 @@
 package team.payedin.android.ui.wallet
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import team.payedin.android.R
+import team.payedin.android.databinding.FragmentWalletBinding
 import team.payedin.android.ui.wallet.placeholder.PlaceholderContent
 
 /**
  * A fragment representing a list of Items.
  */
 class WalletFragment : Fragment() {
+    private var binding: FragmentWalletBinding? = null
 
     private var columnCount = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         arguments?.let {
             columnCount = it.getInt(ARG_COLUMN_COUNT)
         }
@@ -31,6 +32,8 @@ class WalletFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         val view = inflater.inflate(R.layout.fragment_wallet_list, container, false)
+
+        binding = FragmentWalletBinding.inflate(inflater)
 
         // Set the adapter
         if (view is RecyclerView) {
@@ -43,6 +46,13 @@ class WalletFragment : Fragment() {
             }
         }
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        binding?.let {
+            it.toolbarWallet.inflateMenu(R.menu.menu_wallet)
+        }
     }
 
     companion object {
