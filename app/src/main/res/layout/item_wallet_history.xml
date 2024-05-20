@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="12dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_wallet_history_item_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="07/05/2016"
+                android:textColor="#666666"
+                android:textSize="12sp" />
+
+
+            <TextView
+                android:id="@+id/tv_wallet_history_item_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="오후 11:23"
+                android:textColor="#666666"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1f"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_wallet_history_item_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Barone LLC."
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/tv_wallet_history_item_sender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="박*수"
+                android:textColor="#666666"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_wallet_history_item_transfer_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-12,000 원"
+                android:textColor="#666666"
+                android:textSize="14sp" />
+
+
+            <TextView
+                android:id="@+id/tv_wallet_history_item_amount_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="123,000 원"
+                android:textColor="#666666"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>
