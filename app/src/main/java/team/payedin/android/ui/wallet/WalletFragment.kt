@@ -31,7 +31,7 @@ class WalletFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_wallet_list, container, false)
+        val view = inflater.inflate(R.layout.item_wallet_history, container, false)
 
         binding = FragmentWalletBinding.inflate(inflater)
 
@@ -51,7 +51,7 @@ class WalletFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         binding?.let {
-            it.toolbarWallet.inflateMenu(R.menu.menu_wallet)
+            //it.toolbarWallet.inflateMenu(R.menu.menu_wallet)
         }
     }
 
