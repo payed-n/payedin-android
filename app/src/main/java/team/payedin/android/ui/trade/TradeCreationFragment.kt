@@ -5,7 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import team.payedin.android.R
+import team.payedin.android.gahasung.api.ApiProvider
+import team.payedin.android.gahasung.request.CreateTradeRequest
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,8 +43,30 @@ class TradeCreationFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_trade_creation, container, false)
+        val view = inflater.inflate(R.layout.fragment_trade_creation, container, false)
+        view.findViewById<Button>(R.id.creation_create_trade).setOnClickListener {
+            println("ada")
+            CoroutineScope(Dispatchers.Main).launch {
+                runCatching {
+                    withContext(Dispatchers.IO) {
+                        ApiProvider.tradeApi().createTrades(
+                            CreateTradeRequest(
+                                imageUrl = "https://jobis-store.s3.ap-northeast-2.amazonaws.com/LOGO_IMAGE/companydefault.png",
+                                title = view.findViewById<EditText>(R.id.creation_title).text.toString(),
+                                content = view.findViewById<EditText>(R.id.creation_explain).text.toString(),
+                                price = view.findViewById<EditText>(R.id.creation_price).text.toString()
+                                    .toInt(),
+                            )
+                        )
+                    }
+                }.onSuccess {
+                    println("asdas")
+                }.onFailure {
+                    println(it)
+                }
+            }
+        }
+        return view
     }
 
     companion object {
