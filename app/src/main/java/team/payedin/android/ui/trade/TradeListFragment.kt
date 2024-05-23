@@ -49,8 +49,8 @@ class TradeListFragment : Fragment() {
                 response.trade.forEach { trade ->
                     item.add(
                         PlaceholderContent.PlaceholderItem(
-                            id = trade.title,
-                            content = trade.nickname,
+                            id = trade.tradeId,
+                            content = trade.title,
                             details = trade.nickname,
                             img = trade.imageUrl,
                         )

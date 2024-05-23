@@ -1,11 +1,24 @@
 package team.payedin.android.ui.trade
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.fragment.app.FragmentTransaction
+import com.bumptech.glide.Glide
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import team.payedin.android.R
+import team.payedin.android.gahasung.api.ApiProvider
+import team.payedin.android.ui.trade.TradeListRecyclerViewAdapter.Companion.tradeId
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,12 +43,49 @@ class TradeDetailsFragment : Fragment() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_trade_details, container, false)
+        val view = inflater.inflate(R.layout.fragment_trade_details, container, false);
+
+        CoroutineScope(Dispatchers.IO).launch {
+            runCatching {
+                ApiProvider.tradeApi().fetchTradesDetail(tradeId = tradeId)
+            }.onSuccess {
+                println(it.trade)
+                withContext(Dispatchers.Main) {
+
+                    //이미지
+                    Glide.with(view.findViewById<ImageView>(R.id.imageView).context)
+                        .load(it.trade.imageUrl)
+                        .into(view.findViewById(R.id.imageView))
+
+                    view.findViewById<TextView>(R.id.detail_title).text = it.trade.title
+                    view.findViewById<TextView>(R.id.detail_user_name).text =
+                        it.user.gcn + it.user.name
+                    view.findViewById<TextView>(R.id.detail_explain).text = it.trade.content
+                    view.findViewById<TextView>(R.id.detail_price).text =
+                        it.trade.price.toString() + "원"
+                    if (it.status != null) {
+                        view.findViewById<Button>(R.id.detail_request).text =
+                            it.status.toString()
+                    }
+
+                    view.findViewById<ImageButton>(R.id.back).setOnClickListener {
+                        val transaction: FragmentTransaction =
+                            requireActivity().supportFragmentManager.beginTransaction()
+                        val tradeListFragment = TradeListFragment()
+                        transaction.replace(R.id.nav_host_fragment_content_main, tradeListFragment)
+                        transaction.commit()
+                    }
+                }
+            }.onFailure {
+                print(it)
+            }
+        }
+        return view
     }
 
     companion object {
