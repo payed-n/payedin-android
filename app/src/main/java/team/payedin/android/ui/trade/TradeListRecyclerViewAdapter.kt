@@ -1,15 +1,18 @@
 package team.payedin.android.ui.trade
 
-import androidx.recyclerview.widget.RecyclerView
+import android.R.attr.bitmap
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
-import team.payedin.android.R
-
-import team.payedin.android.ui.trade.placeholder.PlaceholderContent.PlaceholderItem
-import team.payedin.android.databinding.FragmentTradeListBinding
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import team.payedin.android.databinding.TradeListItemBinding
+import team.payedin.android.ui.trade.placeholder.PlaceholderContent.PlaceholderItem
+import java.net.HttpURLConnection
+import java.net.URL
+
 
 /**
  * [RecyclerView.Adapter] that can display a [PlaceholderItem].
@@ -17,6 +20,7 @@ import team.payedin.android.databinding.TradeListItemBinding
  */
 class TradeListRecyclerViewAdapter(
     private val values: List<PlaceholderItem>,
+    private val onItemClick: (PlaceholderItem) -> Unit,
 ) : RecyclerView.Adapter<TradeListRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -35,7 +39,13 @@ class TradeListRecyclerViewAdapter(
         val item = values[position]
         holder.idView.text = item.id
         holder.contentView.text = item.content
+
+        // Use Glide to load the image
+        Glide.with(holder.image.context)
+            .load(item.img)
+            .into(holder.image)
     }
+
 
     override fun getItemCount(): Int = values.size
 
@@ -43,6 +53,17 @@ class TradeListRecyclerViewAdapter(
         RecyclerView.ViewHolder(binding.root) {
         val idView: TextView = binding.title
         val contentView: TextView = binding.content
+        val image: ImageView = binding.imgTrade
+        init {
+            // 아이템 뷰 클릭 시 실행할 동작 설정
+            binding.root.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onItemClick(values[position])
+                }
+            }
+        }
+
 
         override fun toString(): String {
             return super.toString() + " '" + contentView.text + "'"

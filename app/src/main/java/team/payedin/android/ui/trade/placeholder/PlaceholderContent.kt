@@ -33,7 +33,7 @@ object PlaceholderContent {
     }
 
     private fun createPlaceholderItem(position: Int): PlaceholderItem {
-        return PlaceholderItem(position.toString(), "Item $position", makeDetails(position))
+        return PlaceholderItem(position.toString(), "Item $position", makeDetails(position), img = position.toString())
     }
 
     private fun makeDetails(position: Int): String {
@@ -48,7 +48,7 @@ object PlaceholderContent {
     /**
      * A placeholder item representing a piece of content.
      */
-    data class PlaceholderItem(val id: String, val content: String, val details: String) {
+    data class PlaceholderItem(val id: String, val content: String, val details: String, val img: String) {
         override fun toString(): String = content
     }
 }

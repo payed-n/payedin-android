@@ -1,7 +1,6 @@
 package team.payedin.android
 
 import android.os.Bundle
-import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -9,7 +8,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import team.payedin.android.databinding.ActivityMainBinding
-import com.google.android.material.snackbar.Snackbar
+import team.payedin.android.ui.trade.TradeListFragment
+import team.payedin.android.ui.wallet.WalletFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,11 +28,34 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null)
-                .setAnchorView(R.id.fab).show()
+        binding.bottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.wallet -> {
+                    setFrag(0)
+                }
+
+                R.id.trade -> {
+                    setFrag(1)
+                }
+
+                else -> false
+            }
         }
+        setFrag(0)
+    }
+
+    private fun setFrag(fragNum: Int): Boolean {
+        val ft = supportFragmentManager.beginTransaction()
+        when (fragNum) {
+            0 -> {
+                ft.replace(R.id.nav_host_fragment_content_main, WalletFragment()).commit()
+            }
+
+            1 -> {
+                ft.replace(R.id.nav_host_fragment_content_main, TradeListFragment()).commit()
+            }
+        }
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
