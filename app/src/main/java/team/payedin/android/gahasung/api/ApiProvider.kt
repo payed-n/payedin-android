@@ -42,4 +42,5 @@ object ApiProvider {
     fun tradeApi(): TradeApi = getRetrofit().create(TradeApi::class.java)
 
     fun walletApi(): WalletApi = getRetrofit().create(WalletApi::class.java)
+    fun userApi(): UserApi = getRetrofit().create(UserApi::class.java)
 }

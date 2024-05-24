@@ -10,7 +10,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import team.payedin.android.R
 import team.payedin.android.databinding.FragmentWalletBinding
 import team.payedin.android.gahasung.api.ApiProvider
 import team.payedin.android.gahasung.response.FetchWalletHistoryResponse
@@ -44,6 +43,29 @@ class WalletFragment : Fragment() {
                 withContext(Dispatchers.Main) {
                     result.addAll(res.histories)
                     adapter.notifyDataSetChanged()
+                }
+            }.onFailure {
+                it.printStackTrace()
+            }
+        }
+        CoroutineScope(Dispatchers.IO).launch {
+            runCatching {
+                ApiProvider.walletApi().fetchWallet()
+            }.onSuccess { res ->
+                withContext(Dispatchers.Main) {
+                    binding.tvWalletAccountMoneyAmount.text = res.balance.toString()
+                    binding.tvWalletUserAccount.text = res.accountNumber
+                }
+            }
+        }
+
+        CoroutineScope(Dispatchers.IO).launch {
+            runCatching {
+                ApiProvider.userApi().fetchPoints()
+            }.onSuccess { res ->
+                withContext(Dispatchers.Main) {
+                    binding.tvWalletPlusPoint.text = "상점 ${res.plusPoint}점"
+                    binding.tvWalletMinusPoint.text = "벌점 ${res.minusPoint}점"
                 }
             }.onFailure {
                 it.printStackTrace()
