@@ -27,7 +27,8 @@ object ApiProvider {
 
     private fun getTokenInterceptor(): Interceptor {
         return Interceptor { chain ->
-            val token = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJhYzFmMTI3Yi04ZmEzLTEyNDYtODE4Zi1hMzcyODQ2OTAwMDAiLCJpYXQiOjE3MTY0Njc0NzAsImV4cCI6MTcxNzQ2NzQ2OX0.d6l-DNgkgDigSGnvwcGi4O1M008JOtDYollZIl0ME7U"
+            val token =
+                "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJhYzFmMTI3Yi04ZmEzLTEyNDYtODE4Zi1hMzcyODQ2OTAwMDAiLCJpYXQiOjE3MTY0Njc0NzAsImV4cCI6MTcxNzQ2NzQ2OX0.d6l-DNgkgDigSGnvwcGi4O1M008JOtDYollZIl0ME7U"
             val request = chain.request().newBuilder()
                 .addHeader(
                     "Authorization",
@@ -40,4 +41,5 @@ object ApiProvider {
 
     fun tradeApi(): TradeApi = getRetrofit().create(TradeApi::class.java)
 
+    fun walletApi(): WalletApi = getRetrofit().create(WalletApi::class.java)
 }
