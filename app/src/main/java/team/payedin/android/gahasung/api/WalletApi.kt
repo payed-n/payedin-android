@@ -10,7 +10,7 @@ interface WalletApi {
     @GET("/wallets/my")
     suspend fun fetchWallet(): FetchWalletResponse
 
-    @GET("/wallets/history")
+    @GET("/wallets/my/history")
     suspend fun fetchWalletHistory(): FetchWalletHistoryResponse
 
     @POST("/wallets/transfer")
