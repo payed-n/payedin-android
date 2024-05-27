@@ -1,48 +1,39 @@
 package team.payedin.android.ui.wallet
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import team.payedin.android.databinding.ItemWalletHistoryBinding
+import team.payedin.android.gahasung.response.FetchWalletHistoryResponse
 
-import team.payedin.android.ui.wallet.placeholder.PlaceholderContent.PlaceholderItem
-import team.payedin.android.databinding.FragmentWalletBinding
-
-/**
- * [RecyclerView.Adapter] that can display a [PlaceholderItem].
- * TODO: Replace the implementation with code for your data type.
- */
 class WalletPayHistoryRecyclerViewAdapter(
-    private val values: List<PlaceholderItem>,
+    private val values: List<FetchWalletHistoryResponse.History>,
 ) : RecyclerView.Adapter<WalletPayHistoryRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-
-        return ViewHolder(
-            FragmentWalletBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
+        val binding = ItemWalletHistoryBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
         )
-
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
-     /*   holder.idView.text = item.id
-        holder.contentView.text = item.content*/
+        holder.bind(item.createdAt, item.name, item.balance, item.difference)
     }
 
     override fun getItemCount(): Int = values.size
 
-    inner class ViewHolder(binding: FragmentWalletBinding) : RecyclerView.ViewHolder(binding.root) {
-        /*val idView: TextView = binding.itemNumber
-        val contentView: TextView = binding.content
-*/
-        override fun toString(): String {
-            return super.toString()// + " '" + contentView.text + "'"
+    inner class ViewHolder(private val binding: ItemWalletHistoryBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(createdAt: String, name: String, balance: Long, difference: Long) {
+            binding.tvWalletHistoryItemDate.text = createdAt
+            binding.tvWalletHistoryItemTitle.text = name
+            binding.tvWalletHistoryItemAmountLeft.text = balance.toString()
+            binding.tvWalletHistoryItemTransferAmount.text = difference.toString()
         }
     }
-
 }
