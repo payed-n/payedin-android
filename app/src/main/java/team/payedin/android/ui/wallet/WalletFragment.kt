@@ -1,5 +1,6 @@
 package team.payedin.android.ui.wallet
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -27,6 +28,7 @@ class WalletFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -54,7 +56,7 @@ class WalletFragment : Fragment() {
             }.onSuccess { res ->
                 withContext(Dispatchers.Main) {
                     binding.tvWalletAccountMoneyAmount.text = res.balance.toString()
-                    binding.tvWalletUserAccount.text = res.accountNumber
+                    binding.tvWalletUserAccount.text = res.name + "@" + res.accountNumber
                 }
             }
         }

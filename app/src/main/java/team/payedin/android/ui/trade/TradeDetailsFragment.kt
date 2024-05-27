@@ -43,25 +43,40 @@ class TradeDetailsFragment : Fragment() {
         }
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
         val view = inflater.inflate(R.layout.fragment_trade_details, container, false);
+        createView(view)
+        view.findViewById<Button>(R.id.detail_request).setOnClickListener {
+            CoroutineScope(Dispatchers.IO).launch {
+                runCatching {
+                    ApiProvider.tradeApi().createTradeRequest(
+                        tradeId = tradeId,
+                    )
+                }.onSuccess {
+                    createView(view)
+                }
+            }
+        }
+        return view
+    }
 
+    @SuppressLint("SetTextI18n")
+    fun createView(view: View) {
         CoroutineScope(Dispatchers.IO).launch {
             runCatching {
                 ApiProvider.tradeApi().fetchTradesDetail(tradeId = tradeId)
             }.onSuccess {
-                println(it.trade)
+                println(it)
                 withContext(Dispatchers.Main) {
-
                     //이미지
                     Glide.with(view.findViewById<ImageView>(R.id.imageView).context)
                         .load(it.trade.imageUrl)
                         .into(view.findViewById(R.id.imageView))
 
+                    //텍스트
                     view.findViewById<TextView>(R.id.detail_title).text = it.trade.title
                     view.findViewById<TextView>(R.id.detail_user_name).text =
                         it.user.gcn + it.user.name
@@ -70,7 +85,9 @@ class TradeDetailsFragment : Fragment() {
                         it.trade.price.toString() + "원"
                     if (it.status != null) {
                         view.findViewById<Button>(R.id.detail_request).text =
-                            it.status.toString()
+                            //it.status.toString()
+                        "요청됨"
+                        view.findViewById<Button>(R.id.detail_request).isEnabled = false
                     }
 
                     view.findViewById<ImageButton>(R.id.back).setOnClickListener {
@@ -85,7 +102,6 @@ class TradeDetailsFragment : Fragment() {
                 print(it)
             }
         }
-        return view
     }
 
     companion object {

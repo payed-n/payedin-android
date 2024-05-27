@@ -41,11 +41,44 @@ class TradeListFragment : Fragment() {
         val item: MutableList<PlaceholderContent.PlaceholderItem> = mutableListOf()
         val view = inflater.inflate(R.layout.fragment_trade_list, container, false)
 
+        updateView(item = item, view = view)
+        view.findViewById<ImageView>(R.id.notification).setOnClickListener {
+            val transaction: FragmentTransaction =
+                requireActivity().supportFragmentManager.beginTransaction()
+            val tradeRequestListFragment = TradeRequestListFragment()
+            transaction.replace(
+                R.id.nav_host_fragment_content_main,
+                tradeRequestListFragment
+            )
+            transaction.commit()
+        }
+        return view
+    }
+
+    private fun delete(
+        id: String,
+        view: View,
+        item: MutableList<PlaceholderContent.PlaceholderItem>,
+    ) {
+        CoroutineScope(Dispatchers.IO).launch {
+            runCatching {
+                ApiProvider.tradeApi().deleteTrade(id)
+            }.onFailure {
+                updateView(item, view)
+            }
+        }
+    }
+
+    private fun updateView(
+        item: MutableList<PlaceholderContent.PlaceholderItem>,
+        view: View,
+    ) {
         CoroutineScope(Dispatchers.IO).launch {
             runCatching {
                 ApiProvider.tradeApi().fetchTrades()
             }.onSuccess { response ->
                 println(response)
+                item.clear()
                 response.trade.forEach { trade ->
                     item.add(
                         PlaceholderContent.PlaceholderItem(
@@ -53,6 +86,7 @@ class TradeListFragment : Fragment() {
                             content = trade.title,
                             details = trade.nickname,
                             img = trade.imageUrl,
+                            tradeId = trade.tradeId,
                         )
                     )
                 }
@@ -68,16 +102,20 @@ class TradeListFragment : Fragment() {
                             )
                             transaction.commit()
                         }
-                        val adapter = TradeListRecyclerViewAdapter(item) {
-                            val transaction: FragmentTransaction =
-                                requireActivity().supportFragmentManager.beginTransaction()
-                            val tradeDetailsFragment = TradeDetailsFragment()
-                            transaction.replace(
-                                R.id.nav_host_fragment_content_main,
-                                tradeDetailsFragment
-                            )
-                            transaction.commit()
-                        }
+                        val adapter = TradeListRecyclerViewAdapter(
+                            item,
+                            onDelete = { delete(it.id,view, item) },
+                            onItemClick = {
+                                val transaction: FragmentTransaction =
+                                    requireActivity().supportFragmentManager.beginTransaction()
+                                val tradeDetailsFragment = TradeDetailsFragment()
+                                transaction.replace(
+                                    R.id.nav_host_fragment_content_main,
+                                    tradeDetailsFragment
+                                )
+                                transaction.commit()
+                            }
+                        )
                         view.findViewById<RecyclerView>(R.id.re).adapter = adapter
                         view.findViewById<RecyclerView>(R.id.re).layoutManager =
                             LinearLayoutManager(context)
@@ -87,9 +125,7 @@ class TradeListFragment : Fragment() {
                 println(it)
             }
         }
-        return view
     }
-
 
     companion object {
 

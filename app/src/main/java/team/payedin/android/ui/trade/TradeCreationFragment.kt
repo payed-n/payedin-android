@@ -7,7 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
+import android.widget.ImageButton
+import androidx.fragment.app.FragmentTransaction
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -44,8 +45,16 @@ class TradeCreationFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         val view = inflater.inflate(R.layout.fragment_trade_creation, container, false)
+
+        val transaction: FragmentTransaction =
+            requireActivity().supportFragmentManager.beginTransaction()
+        val tradeListFragment = TradeListFragment()
+
+        view.findViewById<ImageButton>(R.id.back).setOnClickListener {
+            transaction.replace(R.id.nav_host_fragment_content_main, tradeListFragment)
+            transaction.commit()
+        }
         view.findViewById<Button>(R.id.creation_create_trade).setOnClickListener {
-            println("ada")
             CoroutineScope(Dispatchers.Main).launch {
                 runCatching {
                     withContext(Dispatchers.IO) {
@@ -60,7 +69,8 @@ class TradeCreationFragment : Fragment() {
                         )
                     }
                 }.onSuccess {
-                    println("asdas")
+                    transaction.replace(R.id.nav_host_fragment_content_main, tradeListFragment)
+                    transaction.commit()
                 }.onFailure {
                     println(it)
                 }

@@ -6,6 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import team.payedin.android.R
 import team.payedin.android.databinding.TradeListItemBinding
 import team.payedin.android.ui.trade.placeholder.PlaceholderContent.PlaceholderItem
 
@@ -16,6 +17,7 @@ import team.payedin.android.ui.trade.placeholder.PlaceholderContent.PlaceholderI
 class TradeListRecyclerViewAdapter(
     private val values: List<PlaceholderItem>,
     private val onItemClick: (PlaceholderItem) -> Unit,
+    private val onDelete: (PlaceholderItem) -> Unit,
 ) : RecyclerView.Adapter<TradeListRecyclerViewAdapter.ViewHolder>() {
 
     companion object {
@@ -61,6 +63,10 @@ class TradeListRecyclerViewAdapter(
                     onItemClick(values[position])
                     tradeId = values[position].id
                 }
+            }
+            binding.root.findViewById<ImageView>(R.id.icon_delete).setOnClickListener {
+                val position = adapterPosition
+                onDelete(values[position])
             }
         }
 

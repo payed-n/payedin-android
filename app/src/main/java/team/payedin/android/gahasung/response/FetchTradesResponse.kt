@@ -7,6 +7,7 @@ data class FetchTradesResponse(
 )
 data class Trade(
     @SerializedName("tradeId") val tradeId: String,
+    @SerializedName("isMine") val isMine: Boolean,
     @SerializedName("nickname") val nickname: String,
     @SerializedName("title") val title: String,
     @SerializedName("createdAt") val createdAt: String,
