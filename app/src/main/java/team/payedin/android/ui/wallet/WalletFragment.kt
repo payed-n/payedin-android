@@ -1,19 +1,24 @@
 package team.payedin.android.ui.wallet
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import team.payedin.android.R
 import team.payedin.android.databinding.FragmentWalletBinding
 import team.payedin.android.gahasung.api.ApiProvider
 import team.payedin.android.gahasung.response.FetchWalletHistoryResponse
+import team.payedin.android.ui.transfer.TransferAccountSearchFragment
+import team.payedin.android.ui.transfer.Wallet
 
 class WalletFragment : Fragment() {
 
@@ -23,7 +28,7 @@ class WalletFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         _binding = FragmentWalletBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -37,6 +42,10 @@ class WalletFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         val adapter = WalletPayHistoryRecyclerViewAdapter(result)
         recyclerView.adapter = adapter
+
+        binding.btnWalletTransfer.setOnClickListener {
+            findNavController().navigate(R.id.action_WalletFragment_to_TransferFragment)
+        }
 
         CoroutineScope(Dispatchers.IO).launch {
             runCatching {
