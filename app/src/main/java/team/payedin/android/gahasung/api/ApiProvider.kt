@@ -5,6 +5,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import team.payedin.android.LoginActivity.Companion.token
 
 object ApiProvider {
     private var BASE_URL = "http://43.201.226.60:8080"
@@ -27,8 +28,9 @@ object ApiProvider {
 
     private fun getTokenInterceptor(): Interceptor {
         return Interceptor { chain ->
-            val token =
+            val token = token.ifBlank {
                 "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJhYzFmMTI3Yi04ZmEzLTEyNDYtODE4Zi1hMzcyODQ2OTAwMDAiLCJpYXQiOjE3MTY0Njc0NzAsImV4cCI6MTcxNzQ2NzQ2OX0.d6l-DNgkgDigSGnvwcGi4O1M008JOtDYollZIl0ME7U"
+            }
             val request = chain.request().newBuilder()
                 .addHeader(
                     "Authorization",
@@ -39,8 +41,22 @@ object ApiProvider {
         }
     }
 
+    private fun getLogin(): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(
+                OkHttpClient.Builder()
+                    .addInterceptor(getLoggingInterceptor())
+                    .build()
+            )
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
     fun tradeApi(): TradeApi = getRetrofit().create(TradeApi::class.java)
 
     fun walletApi(): WalletApi = getRetrofit().create(WalletApi::class.java)
     fun userApi(): UserApi = getRetrofit().create(UserApi::class.java)
+
+    fun login(): UserApi = getLogin().create(UserApi::class.java)
 }
