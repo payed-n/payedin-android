@@ -1,5 +1,6 @@
 package team.payedin.android.gahasung.api
 
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import team.payedin.android.gahasung.request.TransferRequest
@@ -14,5 +15,5 @@ interface WalletApi {
     suspend fun fetchWalletHistory(): FetchWalletHistoryResponse
 
     @POST("/wallets/transfer")
-    suspend fun transfer(req: TransferRequest)
+    suspend fun transfer(@Body req: TransferRequest)
 }

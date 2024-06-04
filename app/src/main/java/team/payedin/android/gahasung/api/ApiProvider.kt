@@ -28,7 +28,7 @@ object ApiProvider {
     private fun getTokenInterceptor(): Interceptor {
         return Interceptor { chain ->
             val token =
-                "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJhYzFmMTI3Yi04ZmEzLTEyNDYtODE4Zi1hMzcyODQ2OTAwMDAiLCJpYXQiOjE3MTY0Njc0NzAsImV4cCI6MTcxNzQ2NzQ2OX0.d6l-DNgkgDigSGnvwcGi4O1M008JOtDYollZIl0ME7U"
+                "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJhYzFmMTI3Yi04ZmRiLTE0NjItODE4Zi1kYjk0ZDFiMjAwMDAiLCJpYXQiOjE3MTczNzYwMDIsImV4cCI6MTcxODM3NjAwMX0.q8PcCydy_5Cgi1TWmaJGeq0EzmTiES83Wn91GVyjmds"
             val request = chain.request().newBuilder()
                 .addHeader(
                     "Authorization",

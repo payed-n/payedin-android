@@ -12,15 +12,34 @@
 
         <action
             android:id="@+id/action_WalletFragment_to_TransferFragment"
-            app:destination="@id/TransferFragment" />
+            app:destination="@id/TransferSearchFragment" />
     </fragment>
     <fragment
-        android:id="@+id/TransferFragment"
+        android:id="@+id/TransferSearchFragment"
         android:name="team.payedin.android.ui.transfer.TransferAccountSearchFragment"
         tools:layout="@layout/fragment_transfer_account_search">
 
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
+            android:id="@+id/action_Search_to_Wallet"
+            app:destination="@id/WalletFragment" />
+        <action
+            android:id="@+id/action_Search_to_Deposit"
+            app:destination="@id/TransferDepositFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/TransferDepositFragment"
+        android:name="team.payedin.android.ui.transfer.TransferDepositFragment"
+        tools:layout="@layout/fragment_transfer_deposit">
+        <action
+            android:id="@+id/action_Deposit_to_Result"
+            app:destination="@id/TransferResultFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/TransferResultFragment"
+        android:name="team.payedin.android.ui.transfer.TransferResultFragment"
+        tools:layout="@layout/fragment_transfer_result">
+        <action
+            android:id="@+id/action_Result_to_Wallet"
             app:destination="@id/WalletFragment" />
     </fragment>
     <include app:graph="@navigation/transfer_nav_graph" />
