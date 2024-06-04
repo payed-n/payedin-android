@@ -91,20 +91,20 @@ class TradeListFragment : Fragment() {
                     )
                 }
                 withContext(Dispatchers.Main) {
+                    view.findViewById<ImageView>(R.id.add).setOnClickListener {
+                        val transaction: FragmentTransaction =
+                            requireActivity().supportFragmentManager.beginTransaction()
+                        val tradeCreationFragment = TradeCreationFragment()
+                        transaction.replace(
+                            R.id.nav_host_fragment_content_main,
+                            tradeCreationFragment
+                        )
+                        transaction.commit()
+                    }
                     if (item.isNotEmpty()) {
-                        view.findViewById<ImageView>(R.id.add).setOnClickListener {
-                            val transaction: FragmentTransaction =
-                                requireActivity().supportFragmentManager.beginTransaction()
-                            val tradeCreationFragment = TradeCreationFragment()
-                            transaction.replace(
-                                R.id.nav_host_fragment_content_main,
-                                tradeCreationFragment
-                            )
-                            transaction.commit()
-                        }
                         val adapter = TradeListRecyclerViewAdapter(
                             item,
-                            onDelete = { delete(it.id,view, item) },
+                            onDelete = { delete(it.id, view, item) },
                             onItemClick = {
                                 val transaction: FragmentTransaction =
                                     requireActivity().supportFragmentManager.beginTransaction()
