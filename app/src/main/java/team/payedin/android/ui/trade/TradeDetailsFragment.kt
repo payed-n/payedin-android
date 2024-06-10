@@ -14,9 +14,11 @@ import androidx.fragment.app.FragmentTransaction
 import com.bumptech.glide.Glide
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import team.payedin.android.R
+import team.payedin.android.gahasung.Status
 import team.payedin.android.gahasung.api.ApiProvider
 import team.payedin.android.ui.trade.TradeListRecyclerViewAdapter.Companion.tradeId
 
@@ -35,6 +37,8 @@ class TradeDetailsFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private var id: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -50,6 +54,11 @@ class TradeDetailsFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_trade_details, container, false);
         createView(view)
         view.findViewById<Button>(R.id.detail_request).setOnClickListener {
+            if (view.findViewById<Button>(R.id.detail_request).text == "요청취소") {
+                CoroutineScope(Dispatchers.IO).launch {
+                    ApiProvider.tradeApi().deleteTradeReq(id = id.toString())
+                }
+            }
             CoroutineScope(Dispatchers.IO).launch {
                 runCatching {
                     ApiProvider.tradeApi().createTradeRequest(
@@ -69,6 +78,7 @@ class TradeDetailsFragment : Fragment() {
             runCatching {
                 ApiProvider.tradeApi().fetchTradesDetail(tradeId = tradeId)
             }.onSuccess {
+                id = it.tradeRequestId
                 println(it)
                 withContext(Dispatchers.Main) {
                     //이미지
@@ -83,11 +93,8 @@ class TradeDetailsFragment : Fragment() {
                     view.findViewById<TextView>(R.id.detail_explain).text = it.trade.content
                     view.findViewById<TextView>(R.id.detail_price).text =
                         it.trade.price.toString() + "원"
-                    if (it.status != null) {
-                        view.findViewById<Button>(R.id.detail_request).text =
-                            //it.status.toString()
-                        "요청됨"
-                        view.findViewById<Button>(R.id.detail_request).isEnabled = false
+                    if (it.status == Status.REQUESTED) {
+                        view.findViewById<Button>(R.id.detail_request).text = "요청취소"
                     }
 
                     view.findViewById<ImageButton>(R.id.back).setOnClickListener {
