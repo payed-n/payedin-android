@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.bumptech.glide.Glide
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -25,6 +27,7 @@ import team.payedin.android.gahasung.api.ApiProvider
  */
 class TradeRequestListRecyclerViewAdapter(
     private val values: List<PlaceholderItem>,
+    private val onItemClick: () -> Unit,
 ) : RecyclerView.Adapter<TradeRequestListRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -45,19 +48,25 @@ class TradeRequestListRecyclerViewAdapter(
         Glide.with(holder.imgView.context)
             .load(item.img)
             .into(holder.imgView)
-
         holder.approve.setOnClickListener {
+            onItemClick()
             CoroutineScope(Dispatchers.IO).launch {
                 runCatching {
                     println(item.id)
                     ApiProvider.tradeApi().approveTrade(id = item.tradeId, approve = true)
+                }.onSuccess {
+                    ApiProvider.tradeApi().fetchTradeRequests()
+                }.onFailure {
+                    ApiProvider.tradeApi().fetchTradeRequests()
                 }
             }
         }
         holder.reject.setOnClickListener {
+            onItemClick()
             CoroutineScope(Dispatchers.IO).launch {
                 runCatching {
                     ApiProvider.tradeApi().approveTrade(id = item.id, approve = false)
+                    ApiProvider.tradeApi().fetchTradeRequests()
                 }
             }
         }
