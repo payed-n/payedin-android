@@ -37,7 +37,7 @@ class TradeDetailsFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
-    private var id: String? = null
+    private var id: String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,21 +51,29 @@ class TradeDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_trade_details, container, false);
+        val view = inflater.inflate(R.layout.fragment_trade_details, container, false)
         createView(view)
         view.findViewById<Button>(R.id.detail_request).setOnClickListener {
             if (view.findViewById<Button>(R.id.detail_request).text == "요청취소") {
                 CoroutineScope(Dispatchers.IO).launch {
-                    ApiProvider.tradeApi().deleteTradeReq(id = id.toString())
+                    kotlin.runCatching {
+                        id?.let { it1 -> ApiProvider.tradeApi().deleteTradeReq(id = it1) }
+                    }.onSuccess {
+                        createView(view)
+                    }.onFailure {
+                        println("ㅜㅜ")
+                        createView(view)
+                    }
                 }
-            }
-            CoroutineScope(Dispatchers.IO).launch {
-                runCatching {
-                    ApiProvider.tradeApi().createTradeRequest(
-                        tradeId = tradeId,
-                    )
-                }.onSuccess {
-                    createView(view)
+            } else {
+                CoroutineScope(Dispatchers.IO).launch {
+                    runCatching {
+                        ApiProvider.tradeApi().createTradeRequest(
+                            tradeId = tradeId,
+                        )
+                    }.onSuccess {
+                        createView(view)
+                    }
                 }
             }
         }
@@ -96,7 +104,9 @@ class TradeDetailsFragment : Fragment() {
                     if (it.status == Status.REQUESTED) {
                         view.findViewById<Button>(R.id.detail_request).text = "요청취소"
                     }
-
+                    else if (it.status == null) {
+                        view.findViewById<Button>(R.id.detail_request).text = "요청하기"
+                    }
                     view.findViewById<ImageButton>(R.id.back).setOnClickListener {
                         val transaction: FragmentTransaction =
                             requireActivity().supportFragmentManager.beginTransaction()

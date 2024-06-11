@@ -44,6 +44,7 @@ interface TradeApi {
         @Query("trade_request_id") id: String,
         @Query("approve") approve: Boolean,
     )
+
     @DELETE("/trades/req/{trade_req_id}")
     suspend fun deleteTradeReq(
         @Path("trade_req_id") id: String,
