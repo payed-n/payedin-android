@@ -7,6 +7,7 @@ data class FetchTradeDetailResponse(
     @SerializedName("trade") val trade: TradeDetail,
     @SerializedName("user") val user: User,
     @SerializedName("status") val status: Status?,
+    @SerializedName("tradeRequestId") val tradeRequestId: String?,
 )
 
 data class TradeDetail(

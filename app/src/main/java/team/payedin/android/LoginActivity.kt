@@ -2,7 +2,6 @@ package team.payedin.android
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -34,9 +33,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.btnLogin.setOnClickListener {
-            Log.d("LoginActivity", "Button clicked")
             CoroutineScope(Dispatchers.IO).launch {
-                Log.d("asd", binding.editText.text.toString())
                 runCatching {
                     ApiProvider.login().login(
                         LoginRequest(

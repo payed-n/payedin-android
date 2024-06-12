@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.CoroutineScope
@@ -56,7 +57,19 @@ class TradeRequestListFragment : Fragment() {
                 }
                 withContext(Dispatchers.Main) {
                     if (item.isNotEmpty()) {
-                        val adapter = TradeRequestListRecyclerViewAdapter(item)
+                        val adapter = TradeRequestListRecyclerViewAdapter(item) {
+                            val transaction: FragmentTransaction =
+                                requireActivity().supportFragmentManager.beginTransaction()
+                            val tradeCreationFragment = TradeListFragment()
+                            transaction.replace(
+                                R.id.nav_host_fragment_content_main,
+                                tradeCreationFragment
+                            )
+                            transaction.commit()
+                            CoroutineScope(Dispatchers.IO).launch {
+                                ApiProvider.tradeApi().fetchTradeRequests()
+                            }
+                        }
                         view.findViewById<RecyclerView>(R.id.request_re).adapter = adapter
                         view.findViewById<RecyclerView>(R.id.request_re).layoutManager =
                             LinearLayoutManager(context)
